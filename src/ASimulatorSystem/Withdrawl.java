@@ -76,12 +76,15 @@ public class Withdrawl extends JFrame implements ActionListener{
                     ResultSet rs = c1.s.executeQuery("select * from bank where pin = '"+pin+"'");
                     int balance = 0;
                     while(rs.next()){
-                       if(rs.getString("mode").equals("Deposit")){
-                           balance += Integer.parseInt(rs.getString("amount"));
-                       }else{
-                           balance -= Integer.parseInt(rs.getString("amount"));
-                       }
-                    }
+    String mode = rs.getString("mode");  // get mode once
+    String amountStr = rs.getString("amount");
+
+    if ("Deposit".equals(mode)) {
+        balance += Integer.parseInt(amountStr);
+    } else {
+        balance -= Integer.parseInt(amountStr);
+    }
+}
                     if(balance < Integer.parseInt(amount)){
                         JOptionPane.showMessageDialog(null, "Insuffient Balance");
                         return;
